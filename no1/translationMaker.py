@@ -5,8 +5,7 @@ from matplotlib import pyplot as plt
 import math
 
 # MODEL
-def createCircleModel(col,row):
-    a, b = col/2, row/2
+def createCircleModel(col,row,a,b):
     r = 2
 
     # Preparation
@@ -22,12 +21,10 @@ def createCircleModel(col,row):
 
     np.save("Circle" + ".npy", screen_2d)
 
-def createSquareModel(col,row):
+def createSquareModel(col,row,a,b):
     # Square size
     length = 3
 
-    # Square Position
-    a, b = int(round(col/2)), int(round(row/2))
 
     # Preparation
     plt.figure(figsize=(4, 4), dpi=200)  # Width and height in inches
@@ -140,34 +137,26 @@ def diagonal(model):
 
     plt.show()  # syarat menampilkan
 
-def zigzag(model):
-    u = -1
-    v = 1
-    th = 15
+def zigzag(model,col):
 
-    for i in range(1, 10):
-        model_translated = translation(model, u, v, th)
-        plt.imshow(model_translated)
-        plt.pause(0.01)
-        model = model_translated
+    for j in range(1,int(round(col/15))):
+        u = -1
+        v = 1
+        th = 15
+        for i in range(1, 10):
+            model_translated = translation(model, u, v, th)
+            plt.imshow(model_translated)
+            plt.pause(0.01)
+            model = model_translated
 
-    u = 1
-    v = 1
-    for i in range(1, 10):
-        model_translated = translation(model, u, v, th)
-        plt.imshow(model_translated)
-        plt.pause(0.01)
-        model = model_translated
-
-    u = -1
-    v = 1
-    th = 15
-    for i in range(1, 10):
-        model_translated = translation(model, u, v, th)
-        plt.imshow(model_translated)
-        plt.pause(0.01)
-        model = model_translated
-
+        u = 1
+        v = 1
+        for i in range(1, 10):
+            model_translated = translation(model, u, v, th)
+            plt.imshow(model_translated)
+            plt.pause(0.01)
+            model = model_translated
+    print("Selesai")
     plt.show()  # syarat menampilkan
 
 
@@ -175,7 +164,7 @@ def zigzag(model):
 print("Pilih Resolusi")
 print("A. 60 x 60")
 print("B. 80 x 80")
-print("C. 90 x 90")
+print("C. 100 x 100")
 
 inputResolusi = input("Pilih Resolusi  : ")
 col = 0; row = 0
@@ -186,7 +175,7 @@ elif inputResolusi.lower() == 'b':
     col = 80; row = 80
     print('B')
 elif inputResolusi.lower() == 'c':
-    col = 90; row = 90
+    col = 100; row = 100
     print('C')
 
 print("Pilih Model")
@@ -195,11 +184,11 @@ print("B. Lingkaran")
 
 inputModel = input("Pilih Model : ")
 if inputModel.lower() == 'a':
-    createSquareModel(col, row)
+    createSquareModel(col, row,int(round(col/2)),int(round(row/2)))
     model = np.load("Square.npy")
     print('A')
 elif inputModel.lower() == 'b':
-    createCircleModel(col, row)
+    createCircleModel(col, row,int(round(col/2)),int(round(row/2)))
     model = np.load("Circle.npy")
     print('B')
 
@@ -217,4 +206,12 @@ elif inputTranslasi.lower() == 'b':
 elif inputTranslasi.lower() == 'c':
     diagonal(model)
 elif inputTranslasi.lower() == 'd':
-    zigzag(model)
+    if inputModel.lower() == 'a':
+        createSquareModel(col, row, int(round(col/2)), int(round(5)))
+        model = np.load("Square.npy")
+        print('A')
+    elif inputModel.lower() == 'b':
+        createCircleModel(col, row, int(round(5)), int(round(row/2)))
+        model = np.load("Circle.npy")
+        print('B')
+    zigzag(model,col)
