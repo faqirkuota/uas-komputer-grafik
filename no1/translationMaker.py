@@ -45,7 +45,6 @@ def createSquareModel(col,row):
     np.save("Square" + ".npy", screen_2d)
 
 
-
 # TRANSLASI
 def translation(object,u,v,th):
     row,col,depth=np.shape(object)
@@ -83,7 +82,7 @@ def bounce(model):
 
     plt.show()  # syarat menampilkan
 
-def around(model):
+def square(model):
     u = 1
     v = 0
     th = 15
@@ -102,7 +101,7 @@ def around(model):
         plt.pause(0.01)
         model = model_translated
 
-    u = -1;
+    u = -1
     v = 0
     for i in range(1, 10):
         model_translated = translation(model, u, v, th)
@@ -110,30 +109,9 @@ def around(model):
         plt.pause(0.01)
         model = model_translated
 
-    u = 0;
+    u = 0
     v = -1
     for i in range(1, 10):
-        model_translated = translation(model, u, v, th)
-        plt.imshow(model_translated)
-        plt.pause(0.01)
-        model = model_translated
-
-    plt.show()  # syarat menampilkan
-
-def zigzag(model):
-    u = 1
-    v = -1
-    th = 15
-
-    for i in range(1, 25):
-        model_translated = translation(model, u, v, th)
-        plt.imshow(model_translated)
-        plt.pause(0.01)
-        model = model_translated
-
-    u = -1;
-    v = 0
-    for i in range(1, 51):
         model_translated = translation(model, u, v, th)
         plt.imshow(model_translated)
         plt.pause(0.01)
@@ -162,6 +140,28 @@ def diagonal(model):
 
     plt.show()  # syarat menampilkan
 
+def zigzag(model):
+    u = 1
+    v = -1
+    th = 15
+
+    for i in range(1, 25):
+        model_translated = translation(model, u, v, th)
+        plt.imshow(model_translated)
+        plt.pause(0.01)
+        model = model_translated
+
+    u = -1
+    v = 0
+    for i in range(1, 51):
+        model_translated = translation(model, u, v, th)
+        plt.imshow(model_translated)
+        plt.pause(0.01)
+        model = model_translated
+
+    plt.show()  # syarat menampilkan
+
+
 ## MAIN PROGRAM ##
 print("Pilih Resolusi")
 print("A. 60 x 60")
@@ -169,34 +169,34 @@ print("B. 80 x 80")
 print("C. 90 x 90")
 
 inputResolusi = input("Pilih Resolusi  : ")
-col=0;row=0
+col = 0; row = 0
 if inputResolusi.lower() == 'a':
-    col=60;row=60
+    col = 60; row = 60
     print('A')
 elif inputResolusi.lower() == 'b':
-    col=80;row=80
+    col = 80; row = 80
     print('B')
 elif inputResolusi.lower() == 'c':
-    col=90;row=90
+    col = 90; row = 90
     print('C')
 
 print("Pilih Model")
 print("A. Persegi")
-print("B. Lingkar")
+print("B. Lingkaran")
 
 inputModel = input("Pilih Model : ")
 if inputModel.lower() == 'a':
-    createSquareModel(col,row)
+    createSquareModel(col, row)
     model = np.load("Square.npy")
     print('A')
 elif inputModel.lower() == 'b':
-    createCircleModel(col,row)
+    createCircleModel(col, row)
     model = np.load("Circle.npy")
     print('B')
 
 print("Pilih Translasi")
 print("A. Bounce")
-print("B. Around")
+print("B. Square")
 print("C. Diagonal")
 print("D. Zig-Zag")
 
@@ -204,7 +204,7 @@ inputTranslasi = input("Pilih Translasi : ")
 if inputTranslasi.lower() == 'a':
     bounce(model)
 elif inputTranslasi.lower() == 'b':
-    around(model)
+    square(model)
 elif inputTranslasi.lower() == 'c':
     diagonal(model)
 elif inputTranslasi.lower() == 'd':
