@@ -207,5 +207,5 @@ elif inputTranslasi.lower() == 'b':
     around(model)
 elif inputTranslasi.lower() == 'c':
     diagonal(model)
-elif inputTranslasi.lower() == 'c':
+elif inputTranslasi.lower() == 'd':
     zigzag(model)
