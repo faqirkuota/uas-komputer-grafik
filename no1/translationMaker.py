@@ -141,19 +141,28 @@ def diagonal(model):
     plt.show()  # syarat menampilkan
 
 def zigzag(model):
-    u = 1
-    v = -1
+    u = -1
+    v = 1
     th = 15
 
-    for i in range(1, 25):
+    for i in range(1, 10):
+        model_translated = translation(model, u, v, th)
+        plt.imshow(model_translated)
+        plt.pause(0.01)
+        model = model_translated
+
+    u = 1
+    v = 1
+    for i in range(1, 10):
         model_translated = translation(model, u, v, th)
         plt.imshow(model_translated)
         plt.pause(0.01)
         model = model_translated
 
     u = -1
-    v = 0
-    for i in range(1, 51):
+    v = 1
+    th = 15
+    for i in range(1, 10):
         model_translated = translation(model, u, v, th)
         plt.imshow(model_translated)
         plt.pause(0.01)
