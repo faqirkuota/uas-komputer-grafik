@@ -88,7 +88,15 @@ def around(model):
     v = 0
     th = 15
 
-    for i in range(1, 25):
+    for i in range(1, 10):
+        model_translated = translation(model, u, v, th)
+        plt.imshow(model_translated)
+        plt.pause(0.01)
+        model = model_translated
+
+    u = 0
+    v = 1
+    for i in range(1, 10):
         model_translated = translation(model, u, v, th)
         plt.imshow(model_translated)
         plt.pause(0.01)
@@ -96,7 +104,15 @@ def around(model):
 
     u = -1;
     v = 0
-    for i in range(1, 51):
+    for i in range(1, 10):
+        model_translated = translation(model, u, v, th)
+        plt.imshow(model_translated)
+        plt.pause(0.01)
+        model = model_translated
+
+    u = 0;
+    v = -1
+    for i in range(1, 10):
         model_translated = translation(model, u, v, th)
         plt.imshow(model_translated)
         plt.pause(0.01)
@@ -182,7 +198,7 @@ print("Pilih Translasi")
 print("A. Bounce")
 print("B. Around")
 print("C. Diagonal")
-print("B. Zig-Zag")
+print("D. Zig-Zag")
 
 inputTranslasi = input("Pilih Translasi : ")
 if inputTranslasi.lower() == 'a':
@@ -191,3 +207,5 @@ elif inputTranslasi.lower() == 'b':
     around(model)
 elif inputTranslasi.lower() == 'c':
     diagonal(model)
+elif inputTranslasi.lower() == 'c':
+    zigzag(model)
