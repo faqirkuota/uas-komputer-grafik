@@ -21,10 +21,6 @@ def createCircleModel(col,row):
         screen_2d[int(round(y)), int(round(x)), 2] = 255
 
     np.save("Circle" + ".npy", screen_2d)
-    dummy = np.load("Circle.npy")
-
-    plt.imshow(dummy)
-    plt.show()
 
 def createSquareModel(col,row):
     # Square size
@@ -47,10 +43,8 @@ def createSquareModel(col,row):
             screen_2d[j, i, 2] = 255
 
     np.save("Square" + ".npy", screen_2d)
-    dummy = np.load("Square.npy")
 
-    plt.imshow(dummy)
-    plt.show()
+
 
 # TRANSLASI
 def translation(object,u,v,th):
@@ -112,7 +106,7 @@ def around(model):
 
 def zigzag(model):
     u = 1
-    v = 0
+    v = -1
     th = 15
 
     for i in range(1, 25):
@@ -133,7 +127,7 @@ def zigzag(model):
 
 def diagonal(model):
     u = 1
-    v = 0
+    v = -1
     th = 15
 
     for i in range(1, 25):
@@ -143,7 +137,7 @@ def diagonal(model):
         model = model_translated
 
     u = -1;
-    v = 0
+    v = 1
     for i in range(1, 51):
         model_translated = translation(model, u, v, th)
         plt.imshow(model_translated)
@@ -196,4 +190,4 @@ if inputTranslasi.lower() == 'a':
 elif inputTranslasi.lower() == 'b':
     around(model)
 elif inputTranslasi.lower() == 'c':
-    zigzag(model)
+    diagonal(model)
