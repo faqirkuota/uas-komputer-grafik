@@ -184,6 +184,12 @@ elif inputModel.lower() == 'b':
     model = np.load("Circle.npy")
     print('B')
 
+print("Pilih Translasi")
+print("A. Bounce")
+print("B. Around")
+print("C. Diagonal")
+print("B. Zig-Zag")
+
 inputTranslasi = input("Pilih Translasi : ")
 if inputTranslasi.lower() == 'a':
     bounce(model)
