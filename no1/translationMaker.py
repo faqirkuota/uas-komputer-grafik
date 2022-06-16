@@ -46,7 +46,7 @@ def createSquareModel(col,row):
     length = 3
 
     # Square Position
-    a, b = col/2, row/2
+    a, b = int(round(col/2)), int(round(row/2))
 
     # Preparation
     plt.figure(figsize=(4, 4), dpi=200)  # Width and height in inches
