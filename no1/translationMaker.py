@@ -2,6 +2,7 @@ print("Mulai")
 
 import numpy as np
 from matplotlib import pyplot as plt
+import math
 
 # Translasi
 def translasi(object,u,v,th):
@@ -19,9 +20,80 @@ def translasi(object,u,v,th):
                 obj_out[i+u,j+v,2]=object[i,j,2]
     return obj_out
 
+def createCircleModel(col,row):
+    a, b = col/2, row/2
+    r = 2
 
+    # Preparation
+    plt.figure(figsize=(4, 4), dpi=200)  # Width and height in inches
+
+    # Preparing template for 2D Screen
+    screen_2d = np.zeros(shape=(row, col, 3), dtype=np.uint8)
+
+    for angle in range(0, 360, 5):
+        x = r * math.sin(math.radians(angle)) + a
+        y = r * math.cos(math.radians(angle)) + b
+        screen_2d[int(round(y)), int(round(x)), 2] = 255
+
+    np.save("Circle" + ".npy", screen_2d)
+    dummy = np.load("Circle.npy")
+
+    plt.imshow(dummy)
+    plt.show()
+
+def createSquareModel(col,row):
+    # Square size
+    length = 3
+
+    # Square Position
+    a, b = col/2, row/2
+
+    # Preparation
+    plt.figure(figsize=(4, 4), dpi=200)  # Width and height in inches
+
+    # Preparing template for 2D Screen
+    screen_2d = np.zeros(shape=(row, col, 3), dtype=np.uint8)
+
+    hl = round(length / 2)  # Half Lenght
+
+    # Drawing Square
+    for j in range(a - hl, a + hl):
+        for i in range(b - hl, b + hl):
+            screen_2d[j, i, 2] = 255
+
+    np.save("Square" + ".npy", screen_2d)
+    dummy = np.load("Square.npy")
+
+    plt.imshow(dummy)
+    plt.show()
+
+print("Pilih Resolusi")
+print("A. 60 x 60")
+print("B. 80 x 80")
+print("C. 90 x 90")
+inputResolusi = input("Pilih Resolusi  : ")
+col=0;row=0
+if inputResolusi.lower() == 'a':
+    col=60;row=60
+    print( 'A')
+elif inputResolusi.lower() == 'b':
+    col=80;row=80
+    print( 'B')
+elif inputResolusi.lower() == 'c':
+    col=90;row=90
+    print( 'C')
+
+print("Pilih Model")
+print("A. Persegi")
+print("B. Lingkar")
+inputModel = input("Pilih Model : ")
+if inputModel.lower() == 'a':
+    createSquareModel(col,row)
+    model = np.load("Square.npy")
+elif inputModel.lower() == 'b':
+    createCircleModel(col,row)
+    model = np.load("Circle.npy")
 u=1;v=0;th=15
-model = np.load("Circle.npy")
 row,col,depth=np.shape(model)
 model_translated=translasi(model,u,v,th)
 plt.figure(figsize=(3,3),dpi=200)
