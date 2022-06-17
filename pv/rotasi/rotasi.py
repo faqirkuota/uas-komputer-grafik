@@ -1,21 +1,15 @@
-try:
-    import tkinter as tk                # python 3
-    from tkinter import font as tkfont  # python 3
-    import numpy as np
-    from matplotlib import pyplot as plt
-    import matplotlib.image as mpimg
-    from itertools import cycle
-    from shutil import get_terminal_size
-    from threading import Thread
-    from time import sleep
+import tkinter as tk
+from tkinter import font as tkfont
+import numpy as np
+from matplotlib import pyplot as plt
+import matplotlib.image as mpimg
+from itertools import cycle
+from shutil import get_terminal_size
+from threading import Thread
+from time import sleep
 
-except ImportError:
-    import Tkinter as tk     # python 2
-    import tkFont as tkfont  # python 2
-
-inputNamaFile = 'a'
+inputNamaFile = ''
 inputDerajat = ''
-
 
 def rotation3dMaker():
     class Loader:
@@ -68,9 +62,9 @@ def rotation3dMaker():
 
         # Creatin 3D from 2D Picture #
         print("Creating a 3D Model");
-        print("")
 
-        # User Decide The Size 3D Room and 2D Screen #
+
+        # User Decide The Size 3D Room and 2D Screen #`
         ROW, COL, DEPTH = pic.shape
         LENGTH = COL
         row = ROW - 1;
@@ -148,7 +142,7 @@ def rotation3dMaker():
         for r in range(1, no_of_rotations + 1):
             alfa_rad, beta_rad = degree_to_rad(alfa, beta)  # Convert degree to rad
             voxel = np.load(nama_file + ".npy")  # always read original model
-            loader = Loader("Loading Membuat Model Image...", "Membuat Model Image Selesai!").start()
+            loader = Loader("Please wait... Creating model in the process", "Finished").start()
             for i in range(0, col):
                 for j in range(0, row):
                     for k in range(0, length):
@@ -176,25 +170,20 @@ def rotation3dMaker():
         # Z = 8 and at the leftmost 3D Voxel, Z = Lengthe
         # E.G CAM_z = -5 * LENGTH mean that the Cam resides far behind The 3D Room border
         cam_z = -120
-        print("cam_z =", cam_z)
 
         # ===Preparation===#
         voxel = np.load(nama_file + "_0_0.npy")
-        print("voxel.shape =", voxel.shape)
         maks = max(voxel.shape)
         col, row, length = maks, maks, maks  # Be ensure making a cubic 3D Space and a square 2D Screen
 
         # Preparing the template for 2D Screen (Black) #
         pixel = np.zeros(shape=(row, col, 3), dtype=np.uint8)
 
-        print('col, row, length =', col, ',', row, ',', length)
         cx = round(0.5 * col);
         cy = round(0.5 * row)
-        print('cx, cy =', cx, ',', cy)
 
         # The 2D Screen positions is fixed, that is, analogous the real sensor residing at the cam's focal #
         room_border_z = 0  # The z positions of the 3D room's border its 0.
-        print('room_border_z =', room_border_z)
 
         # Deciding the size of the 2D Screen
         col = col;
@@ -215,7 +204,7 @@ def rotation3dMaker():
             pixel[:, :, :] = 0  # Put the 2D Screen back to black
             voxel = np.load(nama_file + "_" + str(alfa) + "_" + str(beta) + ".npy")
             screen_z = cam_z - cam_focal
-            loader = Loader("Loading Memutar Model Image...", "Memutar Model Image Selesai!").start()
+            loader = Loader("Please wait... Processing image", "Finished!").start()
             for px in range(0, col):  # x of a pixel of the 2D Screen
                 for py in range(0, row):  # y of that pixel
                     for vz in range(0, length):  # z of voxel of the corelating 3D object
@@ -255,8 +244,6 @@ def rotation3dMaker():
     modelMaker(nama_file, degree)
     pictureRotateMaker(nama_file, degree)
     showPicture(nama_file, degree)
-    print("Selesai")
-
 
 class SampleApp(tk.Tk):
 
@@ -342,13 +329,14 @@ class PageTwo(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-
-        button = tk.Button(self, text="Tampilkan hasil gambar",
+        label = tk.Label(self, text="Hasil", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        button1 = tk.Button(self, text="Tampilkan hasil gambar",
                            command=lambda *args: rotation3dMaker())
-        button.pack()
-        button.place(anchor='center', relx=0.5, rely=0.5)
-        frame = tk.Frame(width=200, height=50)
-        frame.pack()
+        button2 = tk.Button(self, text="Kembali ke laman awal",
+                            command=lambda: controller.show_frame("StartPage"))
+        button1.pack()
+        button2.pack()
 
 if __name__ == "__main__":
     app = SampleApp()
