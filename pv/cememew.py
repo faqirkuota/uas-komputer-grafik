@@ -4,7 +4,7 @@ import matplotlib.animation as animation
 import random
 
 def update_bars(num, bars):
-    i = random.randint(0, 3)
+    i = random.randint(0, 2)
     dz[i] += 0.1
     bars[i] = ax.bar3d(xpos[i], ypos[i], zpos[i], dx[i], dy[i], dz[i], color=random.choice(['r', 'g', 'b']))
     return bars

@@ -239,7 +239,6 @@ elif inputNamaFile.lower() == 'b':
 elif inputNamaFile.lower() == 'c':
     nama_file='gambarHellboy'
 
-## MAIN PROGRAM ##
 print("Pilih Derajat Rotasi")
 print("A. 30 Derajat")
 print("B. 40 Derajat")
