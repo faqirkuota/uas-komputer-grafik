@@ -1,5 +1,3 @@
-print("Mulai")
-
 import numpy as np
 from matplotlib import pyplot as plt
 import math
@@ -25,7 +23,6 @@ def createSquareModel(col,row,a,b):
     # Square size
     length = 3
 
-
     # Preparation
     plt.figure(figsize=(4, 4), dpi=200)  # Width and height in inches
 
@@ -40,7 +37,6 @@ def createSquareModel(col,row,a,b):
             screen_2d[j, i, 2] = 255
 
     np.save("Square" + ".npy", screen_2d)
-
 
 # TRANSLASI
 def translation(object,u,v,th):
@@ -83,7 +79,8 @@ def square(model):
     u = 1
     v = 0
     th = 15
-
+    # Iterasi ini dibuat untuk membuat gerakan translasi vertikal kebawah dengan memanggil methode translation
+    # Dengan mengubah nilai u dan v
     for i in range(1, 10):
         model_translated = translation(model, u, v, th)
         plt.imshow(model_translated)
@@ -92,6 +89,8 @@ def square(model):
 
     u = 0
     v = 1
+    # Iterasi ini dibuat untuk membuat gerakan translasi horizontal ke kanan dengan memanggil methode translation
+    # Dengan mengubah nilai u dan v
     for i in range(1, 10):
         model_translated = translation(model, u, v, th)
         plt.imshow(model_translated)
@@ -100,6 +99,8 @@ def square(model):
 
     u = -1
     v = 0
+    # Iterasi ini dibuat untuk membuat gerakan translasi vertikal keatas dengan memanggil methode translation
+    # Dengan mengubah nilai u dan v
     for i in range(1, 10):
         model_translated = translation(model, u, v, th)
         plt.imshow(model_translated)
@@ -108,6 +109,8 @@ def square(model):
 
     u = 0
     v = -1
+    # Iterasi ini dibuat untuk membuat gerakan translasi horizontal ke ke kiri dengan memanggil methode translation
+    # Dengan mengubah nilai u dan v
     for i in range(1, 10):
         model_translated = translation(model, u, v, th)
         plt.imshow(model_translated)
@@ -120,7 +123,8 @@ def diagonal(model):
     u = 1
     v = -1
     th = 15
-
+    # Iterasi ini dibuat untuk membuat gerakan translasi diagonal kebawah dengan memanggil methode translation
+    # Dengan mengubah nilai u dan v
     for i in range(1, 25):
         model_translated = translation(model, u, v, th)
         plt.imshow(model_translated)
@@ -129,6 +133,8 @@ def diagonal(model):
 
     u = -1;
     v = 1
+    # Iterasi ini dibuat untuk membuat gerakan translasi diagonal keatas dengan memanggil methode translation
+    # Dengan mengubah nilai u dan v
     for i in range(1, 51):
         model_translated = translation(model, u, v, th)
         plt.imshow(model_translated)
@@ -139,10 +145,13 @@ def diagonal(model):
 
 def zigzag(model,col):
 
+    #Iterasi ini dibuat membuat gerakan zigzag sebanyak lebar resolusi yang dipilih dibagi 15
     for j in range(1,int(round(col/15))):
         u = -1
         v = 1
         th = 15
+
+        #Iterasi ini dibuat untuk membuat gerakan translasi diagonal ketas dengan memanggil methode translation
         for i in range(1, 10):
             model_translated = translation(model, u, v, th)
             plt.imshow(model_translated)
@@ -151,6 +160,7 @@ def zigzag(model,col):
 
         u = 1
         v = 1
+        #Iterasi ini dibuat untuk membuat gerakan translasi diagonal Kebawah dengan memanggil methode translation
         for i in range(1, 10):
             model_translated = translation(model, u, v, th)
             plt.imshow(model_translated)
@@ -159,13 +169,13 @@ def zigzag(model,col):
     print("Selesai")
     plt.show()  # syarat menampilkan
 
-
 ## MAIN PROGRAM ##
+#Part Ini dibuat untuk menampilkan pilihan resolusi di screen log pada user
+#Dan user bisa memilih pilihan a,b,c melalui keyboard
 print("Pilih Resolusi")
 print("A. 60 x 60")
 print("B. 80 x 80")
 print("C. 100 x 100")
-
 inputResolusi = input("Pilih Resolusi  : ")
 col = 0; row = 0
 if inputResolusi.lower() == 'a':
@@ -178,10 +188,11 @@ elif inputResolusi.lower() == 'c':
     col = 100; row = 100
     print('C')
 
+#Part Ini dibuat untuk menampilkan pilihan model di screen log pada user
+#Dan user bisa memilih pilihan a atau b melalui keyboard
 print("Pilih Model")
 print("A. Persegi")
 print("B. Lingkaran")
-
 inputModel = input("Pilih Model : ")
 if inputModel.lower() == 'a':
     createSquareModel(col, row,int(round(col/2)),int(round(row/2)))
@@ -192,12 +203,13 @@ elif inputModel.lower() == 'b':
     model = np.load("Circle.npy")
     print('B')
 
+#Part Ini dibuat untuk menampilkan pilihan Translasi di screen log pada user
+#Dan user bisa memilih pilihan a,b,c,d melalui keyboard
 print("Pilih Translasi")
 print("A. Bounce")
 print("B. Square")
 print("C. Diagonal")
 print("D. Zig-Zag")
-
 inputTranslasi = input("Pilih Translasi : ")
 if inputTranslasi.lower() == 'a':
     bounce(model)

@@ -53,8 +53,6 @@ def modelMaker(nama_file,degree) :
     no_of_rotations = 1
     pic = plt.imread(nama_file + ".jpg")
     pic = pic.astype(int)
-
-    # Creatin 3D from 2D Picture #
     print("Creating a 3D Model");
     print("")
 
@@ -91,6 +89,7 @@ def modelMaker(nama_file,degree) :
     np.save(nama_file + ".npy", voxel)
     np.save(nama_file + "_0_0.npy", voxel)
 
+    #***2***#
     # ===Defining Function For Degree conversion and rotation===#
     # Converting degree unit of alfa and beta radiant unit#
     def degree_to_rad(alfa, beta):
@@ -155,50 +154,49 @@ def modelMaker(nama_file,degree) :
         alfa = alfa + degree
         beta = beta + degree
 
+#***3***#
+#Methode ini untuk memutar angle kamera agar gambar 2D terlihat menjadi 3D
 def pictureRotateMaker(nama_file,degree) :
     threshold = 15
     no_of_rotations = 1
     cam_focal = 400
 
-    # User decides the cam positions considering that 3D room Border
-    # Z = 8 and at the leftmost 3D Voxel, Z = Lengthe
-    # E.G CAM_z = -5 * LENGTH mean that the Cam resides far behind The 3D Room border
-    cam_z = -120
-    print("cam_z =", cam_z)
-
     # ===Preparation===#
+    #Untuk mengambil file yang sudah tergenerate dari methode modelMaker
+    #Dan Mengambil nilai tertinggi dari file tersebut
     voxel = np.load(nama_file + "_0_0.npy")
     print("voxel.shape =", voxel.shape)
     maks = max(voxel.shape)
-    col, row, length = maks, maks, maks  # Be ensure making a cubic 3D Space and a square 2D Screen
+    col, row, length = maks, maks, maks
 
     # Preparing the template for 2D Screen (Black) #
     pixel = np.zeros(shape=(row, col, 3), dtype=np.uint8)
-
     print('col, row, length =', col, ',', row, ',', length)
     cx = round(0.5 * col);
     cy = round(0.5 * row)
     print('cx, cy =', cx, ',', cy)
-
-    # The 2D Screen positions is fixed, that is, analogous the real sensor residing at the cam's focal #
-    room_border_z = 0  # The z positions of the 3D room's border its 0.
+    room_border_z = 0
     print('room_border_z =', room_border_z)
 
     # Deciding the size of the 2D Screen
     col = col;
     row = row
 
-    # ===Defining the function for backward projection===#
+    # Untuk membuat projeksi secara mundur
     def projection(cx, cy, cam_z, screen_z, px, py, vz):
         pz = screen_z
         vx = round(cx + (cx - px) * ((vz - cam_z) / (cam_z - pz)))
         vy = round(cy + (cy - py) * ((vz - cam_z) / (cam_z - pz)))
         return vx, vy
 
+    #***4***#
+
     # ===Main Program===#
     cam_z = -280  # -420
     alfa = degree
     beta = degree
+
+    #Iterasi ini melakukan perulangan dari jumlah rotasi yang dimasukan#
     for i in range(1, no_of_rotations + 1):
         pixel[:, :, :] = 0  # Put the 2D Screen back to black
         voxel = np.load(nama_file + "_" + str(alfa) + "_" + str(beta) + ".npy")

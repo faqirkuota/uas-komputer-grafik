@@ -283,14 +283,20 @@ class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+
+        #Menampilkan Label 'Pilih Gambar'
         label = tk.Label(self, text="Pilih Gambar", font=controller.title_font)
         label.pack(side="top", fill="x", pady=20)
 
+        #Methode untuk inisiasi variabel global inputNamaFile Dari nilai parameter
         def chooseImage(value):
             global inputNamaFile
             inputNamaFile = value
             controller.show_frame("PageOne")
 
+        #Menampilkan Button pilihan Gambar Alien/Kupu-kupu/Hellboy
+        #Dan memanggil methode choose image agar mengisi nilai sesuai pilihan
+        #Dan pindah ke page berikutnya
         button1 = tk.Button(self, text="Alien",
                             command=lambda *args: chooseImage('a'))
         button2 = tk.Button(self, text="Kupu-Kupu",

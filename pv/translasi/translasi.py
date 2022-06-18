@@ -253,14 +253,20 @@ class PageOne(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+
+        #Menampilkan Label 'Pilih Model'
         label = tk.Label(self, text="Pilih Model", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
 
+        #Methode untuk inisiasi variabel global inputModel Dari nilai parameter
         def chooseModel(value):
             global inputModel
             inputModel = value
             controller.show_frame("PageTwo")
 
+        #Menampilkan Button pilihan persegi/lingkaran
+        #Dan memanggil methode choose model agar mengisi nilai sesuai pilihan
+        #Dan pindah ke page berikutnya
         button1 = tk.Button(self, text="Persegi",
                             command=lambda *args: chooseModel('a'))
         button2 = tk.Button(self, text="Lingkaran",

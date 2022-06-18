@@ -30,7 +30,6 @@ def create3dMapping():
     dz = [first_Num, second_Num, third_Num, fourth_Num, five_Num, sixth_Num,
           seven_Num, eight_Num, nine_Num, ten_Num]
     increment = 2
-    print(bars_Num)
     for i in range(0, bars_Num):
         if i == 0:
             xpos.append(increment)
@@ -193,8 +192,14 @@ class PageTwo(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+
+        #Untuk menampilkan label tulisan "Hasil"
         label = tk.Label(self, text="Hasil", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
+
+        #Untuk Membuat 2 Tombol Tampilkan hasil dan kembali ke awal
+        #Jika Tombol tampilan hasil di tekan akan memanggil methode create3DMapping
+        #Jika tombol kembali ke awal ditekan akan kembali kelaman awal
         button1 = tk.Button(self, text="Tampilkan hasil 3D Mapping",
                            command=lambda *args: create3dMapping())
         button2 = tk.Button(self, text="Kembali ke laman awal",
@@ -202,6 +207,7 @@ class PageTwo(tk.Frame):
         button1.pack()
         button2.pack()
 
+#Main program#
 if __name__ == "__main__":
     app = SampleApp()
     app.mainloop()
